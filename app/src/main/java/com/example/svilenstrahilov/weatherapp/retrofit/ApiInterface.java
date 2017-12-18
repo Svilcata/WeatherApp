@@ -8,5 +8,5 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
     @GET("premium/v1/weather.ashx?")
-    Call<JsonObject> response(@Query("key") String api_key, @Query("q") String city, @Query("format") String format);
+    Call<JsonObject> response(@Query("key") String api_key, @Query("q") String city, @Query("format") String format, @Query("num_of_days") int num_of_days);
 }

@@ -42,7 +42,20 @@
         android:text="@string/forecast"
         android:textSize="22sp" />
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/view"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textView4"
+        android:gravity="center"
+        android:text="current location"
+        android:textSize="11sp" />
+
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/textView4"
@@ -54,5 +67,6 @@
         android:layout_below="@id/textView4"
         android:layout_marginTop="5dp"
         tools:listitem="@layout/item_layout" />
+
 
 </RelativeLayout>
