@@ -10,7 +10,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface CurrentConditionDao {
     @Query("SELECT * FROM current_condition WHERE id = :id")
-    CurrentCondition getItemById(String id);
+    CurrentCondition getCCById(String id);
 
     @Insert(onConflict = REPLACE)
     void addCurrentCondition(CurrentCondition condition);
