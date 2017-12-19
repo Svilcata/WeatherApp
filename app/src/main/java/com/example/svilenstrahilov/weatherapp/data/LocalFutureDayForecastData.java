@@ -1,5 +1,6 @@
 package com.example.svilenstrahilov.weatherapp.data;
 
+import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecast;
 import com.example.svilenstrahilov.weatherapp.repository.AppDatabase;
 import com.example.svilenstrahilov.weatherapp.repository.WeatherDataSource;
 

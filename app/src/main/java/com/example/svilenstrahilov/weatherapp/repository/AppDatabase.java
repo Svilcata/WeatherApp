@@ -8,10 +8,10 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.example.svilenstrahilov.weatherapp.data.CurrentCondition;
-import com.example.svilenstrahilov.weatherapp.data.CurrentConditionDao;
-import com.example.svilenstrahilov.weatherapp.data.FutureDayForecast;
-import com.example.svilenstrahilov.weatherapp.data.FutureDayForecastDao;
+import com.example.svilenstrahilov.weatherapp.data.models.CurrentCondition;
+import com.example.svilenstrahilov.weatherapp.data.models.CurrentConditionDao;
+import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecast;
+import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecastDao;
 
 @Database(entities = {CurrentCondition.class, FutureDayForecast.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
