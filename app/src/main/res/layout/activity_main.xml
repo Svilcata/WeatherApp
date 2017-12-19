@@ -7,15 +7,20 @@
     android:padding="15dp"
     tools:context="com.example.svilenstrahilov.weatherapp.home.HomeActivity">
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/currentDegrees"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="degree ph" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/currentDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -24,10 +29,10 @@
         android:text="current day ph" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/weatherIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/currentDay"
         android:layout_centerHorizontal="true"
         app:srcCompat="@mipmap/ic_launcher" />
 
@@ -37,13 +42,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/weatherIcon"
         android:layout_marginTop="15dp"
         android:text="@string/forecast"
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/currentLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/view"
@@ -62,6 +67,7 @@
         android:background="@android:color/darker_gray" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/future_forecast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView4"

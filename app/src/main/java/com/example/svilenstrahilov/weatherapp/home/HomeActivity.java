@@ -29,4 +29,14 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView {
 //        currentConditionRepository.addItem(new CurrentCondition("123", "321", "12443", "asdas.wads.sd", "snowy"));
 
     }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void removeProgress() {
+
+    }
 }
