@@ -1,6 +1,8 @@
-package com.example.svilenstrahilov.weatherapp;
+package com.example.svilenstrahilov.weatherapp.dagger;
 
 import android.app.Application;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,6 +16,7 @@ public class AppModule {
     }
 
     @Provides
+    @Singleton
     Application providesApplication() {
         return mApplication;
     }
