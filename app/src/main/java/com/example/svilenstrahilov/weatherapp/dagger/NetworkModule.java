@@ -1,6 +1,9 @@
 package com.example.svilenstrahilov.weatherapp.dagger;
 
+import android.support.annotation.NonNull;
+
 import com.example.svilenstrahilov.weatherapp.retrofit.ApiInterface;
+import com.example.svilenstrahilov.weatherapp.retrofit.Service;
 
 import java.io.File;
 
@@ -23,9 +26,10 @@ public class NetworkModule {
         this.cacheFile = cacheFile;
     }
 
+    @NonNull
     @Provides
     @Singleton
-    Retrofit provideCall() {
+    private Retrofit provideCall() {
         Cache cache = null;
         try {
             cache = new Cache(cacheFile, 10 * 1024 * 1024); //10mb
@@ -38,7 +42,8 @@ public class NetworkModule {
                 .build();
 
 
-        return new Retrofit.Builder().baseUrl(BASE_URL)
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -47,7 +52,13 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public ApiInterface provideService(Retrofit retrofit) {
-        return retrofit.create(ApiInterface.class);
+    private ApiInterface provideApiService() {
+        return provideCall().create(ApiInterface.class);
+    }
+
+    @Provides
+    @Singleton
+    public Service provideService() {
+        return new Service(provideApiService());
     }
 }
