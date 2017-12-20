@@ -29,7 +29,7 @@ public class NetworkModule {
     @NonNull
     @Provides
     @Singleton
-    private Retrofit provideCall() {
+    public Retrofit provideCall() {
         Cache cache = null;
         try {
             cache = new Cache(cacheFile, 10 * 1024 * 1024); //10mb
@@ -52,7 +52,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    private ApiInterface provideApiService() {
+    public ApiInterface provideApiService() {
         return provideCall().create(ApiInterface.class);
     }
 
