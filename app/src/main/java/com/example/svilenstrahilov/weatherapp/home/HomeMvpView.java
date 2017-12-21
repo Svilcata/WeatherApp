@@ -1,11 +1,11 @@
 package com.example.svilenstrahilov.weatherapp.home;
 
-import com.google.gson.JsonObject;
+import com.example.svilenstrahilov.weatherapp.retrofit.responseData.ResponseObj;
 
 public interface HomeMvpView {
     void showProgress();
 
     void removeProgress();
 
-    void loadData(JsonObject jsonObject);
+    void loadData(ResponseObj responseObj);
 }

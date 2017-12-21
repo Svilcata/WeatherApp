@@ -1,4 +1,4 @@
-package com.example.svilenstrahilov.weatherapp.retrofit.data;
+package com.example.svilenstrahilov.weatherapp.retrofit.responseData;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

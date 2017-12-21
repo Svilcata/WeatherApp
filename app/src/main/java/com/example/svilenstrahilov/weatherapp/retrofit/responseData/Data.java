@@ -1,6 +1,7 @@
-package com.example.svilenstrahilov.weatherapp.retrofit.data;
+package com.example.svilenstrahilov.weatherapp.retrofit.responseData;
 
 import com.example.svilenstrahilov.weatherapp.data.models.CurrentCondition;
+import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecast;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,9 +14,9 @@ public class Data {
     @SerializedName("current_condition")
     @Expose
     private List<CurrentCondition> currentCondition = null;
-//    @SerializedName("weather")
-//    @Expose
-//    private List<FutureDayForecast> futureDayForecasts = null;
+    @SerializedName("weather")
+    @Expose
+    private List<FutureDayForecast> futureDayForecasts = null;
 
     public List<Request> getRequest() {
         return request;
@@ -32,13 +33,12 @@ public class Data {
     public void setCurrentCondition(List<CurrentCondition> currentCondition) {
         this.currentCondition = currentCondition;
     }
-//
-//    public List<FutureDayForecast> getFutureDayForecasts() {
-//        return futureDayForecasts;
-//    }
-//
-//    public void setFutureDayForecasts(List<FutureDayForecast> futureDayForecasts) {
-//        this.futureDayForecasts = futureDayForecasts;
-//    }
 
+    public List<FutureDayForecast> getFutureDayForecasts() {
+        return futureDayForecasts;
+    }
+
+    public void setFutureDayForecasts(List<FutureDayForecast> futureDayForecasts) {
+        this.futureDayForecasts = futureDayForecasts;
+    }
 }

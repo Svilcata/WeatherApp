@@ -3,7 +3,7 @@ package com.example.svilenstrahilov.weatherapp.data;
 import android.os.AsyncTask;
 
 import com.example.svilenstrahilov.weatherapp.data.models.CurrentCondition;
-import com.example.svilenstrahilov.weatherapp.data.models.CurrentConditionDao;
+import com.example.svilenstrahilov.weatherapp.data.models.dao.CurrentConditionDao;
 import com.example.svilenstrahilov.weatherapp.repository.CurrentConditionRepository;
 
 import javax.inject.Inject;

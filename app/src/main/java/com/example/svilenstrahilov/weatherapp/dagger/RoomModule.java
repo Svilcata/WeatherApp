@@ -5,8 +5,8 @@ import android.arch.persistence.room.Room;
 
 import com.example.svilenstrahilov.weatherapp.data.CurrentConditionDataSource;
 import com.example.svilenstrahilov.weatherapp.data.FutureDayForecastDataSource;
-import com.example.svilenstrahilov.weatherapp.data.models.CurrentConditionDao;
-import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecastDao;
+import com.example.svilenstrahilov.weatherapp.data.models.dao.CurrentConditionDao;
+import com.example.svilenstrahilov.weatherapp.data.models.dao.FutureDayForecastDao;
 import com.example.svilenstrahilov.weatherapp.repository.db.AppDatabase;
 import com.example.svilenstrahilov.weatherapp.repository.CurrentConditionRepository;
 import com.example.svilenstrahilov.weatherapp.repository.FutureForecastRepository;

@@ -1,6 +1,6 @@
 package com.example.svilenstrahilov.weatherapp.retrofit;
 
-import com.google.gson.JsonObject;
+import com.example.svilenstrahilov.weatherapp.retrofit.responseData.ResponseObj;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -16,15 +16,15 @@ public class Service {
     }
 
     public void getResponseFromApi(String city, int number_of_days, final GetCallback callback) {
-        apiInterface.response("ae3d24f1ab404816957121710171812", city, "json", number_of_days).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<JsonObject>() {
+        apiInterface.response("ae3d24f1ab404816957121710171812", city, "json", number_of_days).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResponseObj>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(JsonObject jsonObject) {
-                callback.onSuccess(jsonObject);
+            public void onNext(ResponseObj responseObj) {
+                callback.onSuccess(responseObj);
 
             }
 
@@ -40,7 +40,7 @@ public class Service {
     }
 
     public interface GetCallback {
-        JsonObject onSuccess(JsonObject jsonObject);
+        ResponseObj onSuccess(ResponseObj responseObj);
 
         void onError(String error);
     }

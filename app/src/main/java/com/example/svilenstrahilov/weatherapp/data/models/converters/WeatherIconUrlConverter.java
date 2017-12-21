@@ -2,7 +2,7 @@ package com.example.svilenstrahilov.weatherapp.data.models.converters;
 
 import android.arch.persistence.room.TypeConverter;
 
-import com.example.svilenstrahilov.weatherapp.retrofit.data.WeatherIconUrl;
+import com.example.svilenstrahilov.weatherapp.retrofit.responseData.WeatherIconUrl;
 
 import java.util.ArrayList;
 import java.util.List;

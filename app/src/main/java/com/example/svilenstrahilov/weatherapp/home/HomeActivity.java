@@ -14,8 +14,7 @@ import com.example.svilenstrahilov.weatherapp.dagger.RoomModule;
 import com.example.svilenstrahilov.weatherapp.repository.CurrentConditionRepository;
 import com.example.svilenstrahilov.weatherapp.repository.FutureForecastRepository;
 import com.example.svilenstrahilov.weatherapp.retrofit.Service;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.example.svilenstrahilov.weatherapp.retrofit.responseData.ResponseObj;
 
 import java.io.File;
 
@@ -60,9 +59,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView {
     }
 
     @Override
-    public void loadData(JsonObject jsonObject) {
-        Log.e("LOG", jsonObject.toString());
-        JsonElement jsonElement = jsonObject.get("data");
-        Log.e("LOG", jsonElement.toString());
+    public void loadData(ResponseObj responseObj) {
+        Log.e("LOG", responseObj.getData().toString());
     }
 }

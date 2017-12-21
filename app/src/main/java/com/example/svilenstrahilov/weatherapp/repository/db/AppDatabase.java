@@ -7,9 +7,9 @@ import android.arch.persistence.room.InvalidationTracker;
 import android.arch.persistence.room.RoomDatabase;
 
 import com.example.svilenstrahilov.weatherapp.data.models.CurrentCondition;
-import com.example.svilenstrahilov.weatherapp.data.models.CurrentConditionDao;
+import com.example.svilenstrahilov.weatherapp.data.models.dao.CurrentConditionDao;
 import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecast;
-import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecastDao;
+import com.example.svilenstrahilov.weatherapp.data.models.dao.FutureDayForecastDao;
 
 @Database(entities = {CurrentCondition.class, FutureDayForecast.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {

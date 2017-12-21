@@ -2,8 +2,8 @@ package com.example.svilenstrahilov.weatherapp.dagger;
 
 import android.app.Application;
 
-import com.example.svilenstrahilov.weatherapp.data.models.CurrentConditionDao;
-import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecastDao;
+import com.example.svilenstrahilov.weatherapp.data.models.dao.CurrentConditionDao;
+import com.example.svilenstrahilov.weatherapp.data.models.dao.FutureDayForecastDao;
 import com.example.svilenstrahilov.weatherapp.home.HomeActivity;
 import com.example.svilenstrahilov.weatherapp.repository.CurrentConditionRepository;
 import com.example.svilenstrahilov.weatherapp.repository.FutureForecastRepository;

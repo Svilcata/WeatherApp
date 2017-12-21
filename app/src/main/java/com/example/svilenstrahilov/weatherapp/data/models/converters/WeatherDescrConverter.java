@@ -2,21 +2,26 @@ package com.example.svilenstrahilov.weatherapp.data.models.converters;
 
 import android.arch.persistence.room.TypeConverter;
 
-import java.util.Arrays;
+import com.example.svilenstrahilov.weatherapp.retrofit.responseData.WeatherDesc;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class WeatherDescrConverter {
     @TypeConverter
-    public static List<String> toList(String value) {
-        List<String> list = Arrays.asList(value.split("\\s*,\\s*"));
-        return list;
+    public static List<WeatherDesc> toList(String value) {
+        List<WeatherDesc> weatherDescList = new ArrayList<>();
+        weatherDescList.add(new WeatherDesc(value));
+        return weatherDescList;
     }
 
     @TypeConverter
-    public String toString(List<String> weatherDesc) {
-        String value = "";
-        for (String weather : weatherDesc)
-            value += weather + ",";
-        return value;
+    public static String toString(List<WeatherDesc> weatherDescs) {
+        StringBuilder value = new StringBuilder();
+        for (WeatherDesc weatherDesc :
+                weatherDescs) {
+            value.append(weatherDesc.getWeatherDesc()).append(",");
+        }
+        return value.toString();
     }
 }

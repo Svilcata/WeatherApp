@@ -1,7 +1,7 @@
 package com.example.svilenstrahilov.weatherapp.data;
 
 import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecast;
-import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecastDao;
+import com.example.svilenstrahilov.weatherapp.data.models.dao.FutureDayForecastDao;
 import com.example.svilenstrahilov.weatherapp.repository.FutureForecastRepository;
 
 import java.util.List;

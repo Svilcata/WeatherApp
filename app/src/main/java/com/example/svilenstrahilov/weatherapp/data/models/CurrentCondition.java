@@ -2,10 +2,13 @@ package com.example.svilenstrahilov.weatherapp.data.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
-import com.example.svilenstrahilov.weatherapp.retrofit.data.WeatherIconUrl;
+import com.example.svilenstrahilov.weatherapp.data.models.converters.WeatherDescrConverter;
+import com.example.svilenstrahilov.weatherapp.data.models.converters.WeatherIconUrlConverter;
+import com.example.svilenstrahilov.weatherapp.retrofit.responseData.WeatherDesc;
+import com.example.svilenstrahilov.weatherapp.retrofit.responseData.WeatherIconUrl;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -33,29 +36,21 @@ public class CurrentCondition {
 
     @SerializedName("weatherIconUrl")
     @Expose
-    @Ignore
+    @TypeConverters(WeatherIconUrlConverter.class)
     private List<WeatherIconUrl> weatherIconUrl;
 
-//
-//    @SerializedName("weatherDesc")
-//    @Expose
-//    @ColumnInfo(name = "weatherDescription")
-//    @TypeConverters(WeatherIconUrlConverter.class)
-//    private List<WeatherDesc> weatherDescription;
+    @SerializedName("weatherDesc")
+    @Expose
+    @ColumnInfo(name = "weatherDescription")
+    @TypeConverters(WeatherDescrConverter.class)
+    private List<WeatherDesc> weatherDescription;
 
-
-    public CurrentCondition(String observationTime, String tempCelsius, String tempFahrenheit) {
-        this.observationTime = observationTime;
-        this.tempCelsius = tempCelsius;
-        this.tempFahrenheit = tempFahrenheit;
-    }
-
-    public CurrentCondition(String observationTime, String tempCelsius, String tempFahrenheit, List<WeatherIconUrl> weatherIconUrl) {
+    public CurrentCondition(String observationTime, String tempCelsius, String tempFahrenheit, List<WeatherIconUrl> weatherIconUrl, List<WeatherDesc> weatherDescription) {
         this.observationTime = observationTime;
         this.tempCelsius = tempCelsius;
         this.tempFahrenheit = tempFahrenheit;
         this.weatherIconUrl = weatherIconUrl;
-//        this.weatherDescription = weatherDescription;
+        this.weatherDescription = weatherDescription;
     }
 
     public String getObservationTime() {
@@ -90,11 +85,11 @@ public class CurrentCondition {
         this.weatherIconUrl = weatherIconUrl;
     }
 
-//    public List<WeatherDesc> getWeatherDescription() {
-//        return weatherDescription;
-//    }
-//
-//    public void setWeatherDescription(List<WeatherDesc> weatherDescription) {
-//        this.weatherDescription = weatherDescription;
-//    }
+    public List<WeatherDesc> getWeatherDescription() {
+        return weatherDescription;
+    }
+
+    public void setWeatherDescription(List<WeatherDesc> weatherDescription) {
+        this.weatherDescription = weatherDescription;
+    }
 }

@@ -3,7 +3,7 @@ package com.example.svilenstrahilov.weatherapp.home;
 import android.util.Log;
 
 import com.example.svilenstrahilov.weatherapp.retrofit.Service;
-import com.google.gson.JsonObject;
+import com.example.svilenstrahilov.weatherapp.retrofit.responseData.ResponseObj;
 
 public class HomePresenter implements HomeMvpPresenter {
     private HomeMvpView mHomeMvpView;
@@ -15,13 +15,13 @@ public class HomePresenter implements HomeMvpPresenter {
     }
 
     @Override
-    public JsonObject callApi(String city, int number_of_days) {
+    public ResponseObj callApi(String city, int number_of_days) {
         mService.getResponseFromApi(city, number_of_days, new Service.GetCallback() {
             @Override
-            public JsonObject onSuccess(JsonObject jsonObject) {
+            public ResponseObj onSuccess(ResponseObj responseObj) {
                 mHomeMvpView.removeProgress();
-                mHomeMvpView.loadData(jsonObject);
-                return jsonObject;
+                mHomeMvpView.loadData(responseObj);
+                return responseObj;
             }
 
             @Override
