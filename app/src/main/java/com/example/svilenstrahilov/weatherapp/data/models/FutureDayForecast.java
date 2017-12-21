@@ -4,17 +4,31 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 @Entity(tableName = "future_conditions")
 public class FutureDayForecast {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    @SerializedName("maxtempC")
+    @Expose
     @ColumnInfo(name = "maxTempC")
     private String maxTempCelsius;
+
+    @SerializedName("mintempC")
+    @Expose
     @ColumnInfo(name = "minTempC")
     private String minTempCelsius;
+
+    @SerializedName("maxtempF")
+    @Expose
     @ColumnInfo(name = "maxTempF")
     private String maxTempFahrenheit;
+
+    @SerializedName("mintempF")
+    @Expose
     @ColumnInfo(name = "minTempF")
     private String minTempFahrenheit;
 
