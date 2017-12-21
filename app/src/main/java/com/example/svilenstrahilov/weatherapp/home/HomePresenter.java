@@ -15,8 +15,8 @@ public class HomePresenter implements HomeMvpPresenter {
     }
 
     @Override
-    public JsonObject callApi() {
-        mService.getResponseFromApi(new Service.GetCallback() {
+    public JsonObject callApi(String city, int number_of_days) {
+        mService.getResponseFromApi(city, number_of_days, new Service.GetCallback() {
             @Override
             public JsonObject onSuccess(JsonObject jsonObject) {
                 mHomeMvpView.removeProgress();

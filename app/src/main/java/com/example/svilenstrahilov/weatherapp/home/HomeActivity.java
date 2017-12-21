@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView {
         progressBar = findViewById(R.id.progress);
 
         HomePresenter presenter = new HomePresenter(this, service);
-        presenter.callApi();
+        presenter.callApi("Sofia", 5); //hardcoded
 
 
 //        currentConditionRepository.addItem(new CurrentCondition("123", "321", "12443", "asdas.wads.sd", "snowy"));

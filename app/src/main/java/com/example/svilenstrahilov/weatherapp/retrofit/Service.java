@@ -15,8 +15,8 @@ public class Service {
         this.apiInterface = apiInterface;
     }
 
-    public void getResponseFromApi(final GetCallback callback) {
-        apiInterface.response("ae3d24f1ab404816957121710171812", "Sofia", "json", 5).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<JsonObject>() {
+    public void getResponseFromApi(String city, int number_of_days, final GetCallback callback) {
+        apiInterface.response("ae3d24f1ab404816957121710171812", city, "json", number_of_days).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<JsonObject>() {
             @Override
             public void onSubscribe(Disposable d) {
 
