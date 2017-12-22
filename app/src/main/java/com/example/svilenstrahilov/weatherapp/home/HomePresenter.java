@@ -20,7 +20,7 @@ public class HomePresenter implements HomeMvpPresenter {
             @Override
             public ResponseObj onSuccess(ResponseObj responseObj) {
                 mHomeMvpView.removeProgress();
-                mHomeMvpView.loadData(responseObj);
+                mHomeMvpView.updateViews(responseObj);
                 return responseObj;
             }
 
@@ -30,5 +30,16 @@ public class HomePresenter implements HomeMvpPresenter {
             }
         });
         return null;
+    }
+
+    @Override
+    public void attachView(HomeMvpView view, Service service) {
+        this.mHomeMvpView = view;
+        this.mService = service;
+    }
+
+    @Override
+    public void detachView() {
+        this.mHomeMvpView = null;
     }
 }

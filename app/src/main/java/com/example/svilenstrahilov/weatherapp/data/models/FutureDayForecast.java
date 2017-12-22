@@ -12,6 +12,11 @@ public class FutureDayForecast {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    @SerializedName("date")
+    @Expose
+    @ColumnInfo(name = "date")
+    private String date;
+
     @SerializedName("maxtempC")
     @Expose
     @ColumnInfo(name = "maxTempC")
@@ -32,7 +37,8 @@ public class FutureDayForecast {
     @ColumnInfo(name = "minTempF")
     private String minTempFahrenheit;
 
-    public FutureDayForecast(String maxTempCelsius, String minTempCelsius, String maxTempFahrenheit, String minTempFahrenheit) {
+    public FutureDayForecast(String date, String maxTempCelsius, String minTempCelsius, String maxTempFahrenheit, String minTempFahrenheit) {
+        this.date = date;
         this.maxTempCelsius = maxTempCelsius;
         this.minTempCelsius = minTempCelsius;
         this.maxTempFahrenheit = maxTempFahrenheit;
@@ -69,5 +75,13 @@ public class FutureDayForecast {
 
     public void setMinTempFahrenheit(String minTempFahrenheit) {
         this.minTempFahrenheit = minTempFahrenheit;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

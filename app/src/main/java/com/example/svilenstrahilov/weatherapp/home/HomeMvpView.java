@@ -7,5 +7,5 @@ public interface HomeMvpView {
 
     void removeProgress();
 
-    void loadData(ResponseObj responseObj);
+    void updateViews(ResponseObj responseObj);
 }

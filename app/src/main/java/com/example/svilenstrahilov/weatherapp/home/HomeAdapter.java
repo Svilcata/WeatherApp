@@ -1,6 +1,5 @@
 package com.example.svilenstrahilov.weatherapp.home;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,32 +9,55 @@ import android.widget.TextView;
 import com.example.svilenstrahilov.weatherapp.R;
 import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
-    List<FutureDayForecast> futureDayForecasts;
-    private Context context;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    public HomeAdapter(Context context, List<FutureDayForecast> futureDayForecasts, Context context1) {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
+    private List<FutureDayForecast> futureDayForecasts;
+
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.weekDay) TextView weekDay;
+        @BindView(R.id.weekDayDegrees)TextView weekDayDegrees;
+
+        MyViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    HomeAdapter(List<FutureDayForecast> futureDayForecasts) {
         this.futureDayForecasts = futureDayForecasts;
-        this.context = context1;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_layout, parent, false);
-        return new ViewHolder(view);
+
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        FutureDayForecast futureDayForecast = futureDayForecasts.get(position);
+        holder.weekDayDegrees.setText(futureDayForecast.getMaxTempCelsius() + "\u00b0");
 
-            }
-        });
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            Date myDate = simpleDateFormat.parse(futureDayForecast.getDate());
+            simpleDateFormat.applyPattern("EEEE");
+            String weekDay = simpleDateFormat.format(myDate);
+            holder.weekDay.setText(weekDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -44,13 +66,4 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        TextView weekDay, weekDayDegrees;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            weekDay = itemView.findViewById(R.id.weekDay);
-            weekDayDegrees = itemView.findViewById(R.id.weekDayDegrees);
-        }
-    }
 }
