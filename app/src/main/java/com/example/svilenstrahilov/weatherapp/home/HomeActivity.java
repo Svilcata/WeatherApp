@@ -79,7 +79,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, User
     }
 
     private void attachPresenter() {
-        presenter = (HomeMvpPresenter) getLastCustomNonConfigurationInstance();
+        presenter = (HomeMvpPresenter) onRetainCustomNonConfigurationInstance();
         if (presenter == null) {
             presenter = new HomePresenter(this, service);
             presenter.callApi("Sofia", 5);
