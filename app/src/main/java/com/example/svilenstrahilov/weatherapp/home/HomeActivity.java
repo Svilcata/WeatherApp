@@ -6,6 +6,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -17,13 +20,13 @@ import com.example.svilenstrahilov.weatherapp.dagger.DaggerAppComponent;
 import com.example.svilenstrahilov.weatherapp.dagger.NetworkModule;
 import com.example.svilenstrahilov.weatherapp.dagger.RoomModule;
 import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecast;
+import com.example.svilenstrahilov.weatherapp.home.inputdialog.InputDialog;
 import com.example.svilenstrahilov.weatherapp.repository.CurrentConditionRepository;
 import com.example.svilenstrahilov.weatherapp.repository.FutureForecastRepository;
 import com.example.svilenstrahilov.weatherapp.retrofit.Service;
 import com.example.svilenstrahilov.weatherapp.retrofit.responseData.ResponseObj;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +35,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity implements HomeMvpView, UserInputFragment.UserInputListener {
+public class HomeActivity extends AppCompatActivity implements HomeMvpView, InputDialog.UserInputListener {
     @Inject
     CurrentConditionRepository currentConditionRepository;
     @Inject
@@ -54,7 +57,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, User
     ImageView weatherIcon;
 
     private HomeAdapter homeAdapter;
-    HomeMvpPresenter presenter;
+    HomeMvpPresenter homeMvpPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +65,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, User
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        File cacheFile = new File(getCacheDir(), "response");
-
-        DaggerAppComponent.builder().appModule(new AppModule(getApplication())).networkModule(new NetworkModule(cacheFile)).roomModule(new RoomModule(getApplication())).build().inject(this);
+        DaggerAppComponent.builder().appModule(new AppModule(getApplication())).networkModule(new NetworkModule()).roomModule(new RoomModule(getApplication())).build().inject(this);
 
         RecyclerView recyclerViewFutureForecast = findViewById(R.id.future_forecast);
 
@@ -75,32 +76,53 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, User
         recyclerViewFutureForecast.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerViewFutureForecast.setAdapter(homeAdapter);
 
-        attachPresenter();
+        attachMainPresenter();
     }
 
-    private void attachPresenter() {
-        presenter = (HomeMvpPresenter) onRetainCustomNonConfigurationInstance();
-        if (presenter == null) {
-            presenter = new HomePresenter(this, service);
-            presenter.callApi("Sofia", 5);
+    private void attachMainPresenter() {
+        homeMvpPresenter = (HomeMvpPresenter) getLastCustomNonConfigurationInstance();
+        if (homeMvpPresenter == null) {
+            homeMvpPresenter = new HomePresenter(this, service);
         }
-        presenter.attachView(this, service);
+        homeMvpPresenter.attachView(this, service);
+    }
+
+    private void attachDialog() {
+        homeMvpPresenter.attachDialog(getSupportFragmentManager());
     }
 
     @Override
     public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.input:
+                attachDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     protected void onDestroy() {
-        presenter.detachView();
+        homeMvpPresenter.detachView();
         super.onDestroy();
     }
 
     @Override
     public Object onRetainCustomNonConfigurationInstance() {
-        return presenter;
+        return homeMvpPresenter;
     }
 
     @Override
@@ -110,16 +132,20 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, User
 
     @Override
     public void updateViews(ResponseObj responseObj) {
-        currentLocation.setText(responseObj.getData().getRequest().get(0).getQuery());
-        currentDegrees.setText(responseObj.getData().getCurrentCondition().get(0).getTempCelsius() + "\u00b0");
-        observation_time.setText(responseObj.getData().getCurrentCondition().get(0).getObservationTime());
-        Picasso.with(this).load(responseObj.getData().getCurrentCondition().get(0).getWeatherIconUrl().get(0).getWeatherIconUrl()).into(weatherIcon);
-        futureDayForecastList.addAll(responseObj.getData().getFutureDayForecasts());
-        homeAdapter.notifyDataSetChanged();
+        try {
+            currentLocation.setText(responseObj.getData().getRequest().get(0).getQuery());
+            currentDegrees.setText(responseObj.getData().getCurrentCondition().get(0).getTempCelsius() + "\u00b0");
+            observation_time.setText(responseObj.getData().getCurrentCondition().get(0).getObservationTime());
+            Picasso.with(this).load(responseObj.getData().getCurrentCondition().get(0).getWeatherIconUrl().get(0).getWeatherIconUrl()).into(weatherIcon);
+            futureDayForecastList.addAll(responseObj.getData().getFutureDayForecasts());
+            homeAdapter.notifyDataSetChanged();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void getBackUserInput(String city, int days) {
-        presenter.callApi(city, days);
+    public void onInputSubmitted(String cityName, int daysForecast) {
+        homeMvpPresenter.callApi(cityName, daysForecast);
     }
 }
