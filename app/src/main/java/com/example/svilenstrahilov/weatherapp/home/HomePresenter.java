@@ -8,8 +8,6 @@ import com.example.svilenstrahilov.weatherapp.retrofit.Service;
 import com.example.svilenstrahilov.weatherapp.retrofit.responseData.ResponseObj;
 
 public class HomePresenter implements HomeMvpPresenter {
-
-
     private HomeMvpView mHomeMvpView;
     private Service mService;
     private ResponseObj responseObject;
@@ -17,11 +15,6 @@ public class HomePresenter implements HomeMvpPresenter {
     HomePresenter(HomeMvpView homeMvpView, Service service) {
         this.mHomeMvpView = homeMvpView;
         this.mService = service;
-        updateResponseObjFromDB();
-    }
-
-    private void updateResponseObjFromDB() {
-
     }
 
     @Override

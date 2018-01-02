@@ -19,7 +19,6 @@ import com.example.svilenstrahilov.weatherapp.dagger.AppModule;
 import com.example.svilenstrahilov.weatherapp.dagger.DaggerAppComponent;
 import com.example.svilenstrahilov.weatherapp.dagger.NetworkModule;
 import com.example.svilenstrahilov.weatherapp.dagger.RoomModule;
-import com.example.svilenstrahilov.weatherapp.data.models.CurrentCondition;
 import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecast;
 import com.example.svilenstrahilov.weatherapp.home.inputdialog.InputDialog;
 import com.example.svilenstrahilov.weatherapp.repository.CurrentConditionRepository;
@@ -140,20 +139,10 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
             Picasso.with(this).load(responseObj.getData().getCurrentCondition().get(0).getWeatherIconUrl().get(0).getWeatherIconUrl()).into(weatherIcon);
             futureDayForecastList.addAll(responseObj.getData().getFutureDayForecasts());
             homeAdapter.notifyDataSetChanged();
-            saveData(responseObj);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
-    }
-
-    private void saveData(ResponseObj responseObj) {
-        currentConditionRepository.addItem(new CurrentCondition(responseObj.getData().getCurrentCondition().get(0).getObservationTime()
-                , responseObj.getData().getCurrentCondition().get(0).getTempCelsius()
-                , responseObj.getData().getCurrentCondition().get(0).getTempFahrenheit()
-                , responseObj.getData().getCurrentCondition().get(0).getWeatherIconUrl()
-                , responseObj.getData().getCurrentCondition().get(0).getWeatherDescription()));
-        futureForecastRepository.addItems(responseObj.getData().getFutureDayForecasts());
     }
 
     @Override
