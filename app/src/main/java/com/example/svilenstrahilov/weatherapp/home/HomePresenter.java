@@ -8,6 +8,8 @@ import com.example.svilenstrahilov.weatherapp.retrofit.Service;
 import com.example.svilenstrahilov.weatherapp.retrofit.responseData.ResponseObj;
 
 public class HomePresenter implements HomeMvpPresenter {
+
+
     private HomeMvpView mHomeMvpView;
     private Service mService;
     private ResponseObj responseObject;
@@ -22,12 +24,6 @@ public class HomePresenter implements HomeMvpPresenter {
 
     }
 
-
-    private void saveResponseObjToDB(ResponseObj responseObj) {
-        
-    }
-
-
     @Override
     public ResponseObj callApi(String city, int number_of_days) {
         mHomeMvpView.showProgress();
@@ -37,7 +33,6 @@ public class HomePresenter implements HomeMvpPresenter {
                 mHomeMvpView.removeProgress();
                 responseObject = responseObj;
                 updateViews(responseObj);
-                saveResponseObjToDB(responseObj);
                 return responseObj;
             }
 
