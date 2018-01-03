@@ -37,7 +37,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity implements HomeMvpView, InputDialog.UserInputListener {
+public class HomeActivity extends AppCompatActivity implements HomeMvpView, InputDialog.DialogListener {
     @Inject
     CurrentConditionRepository currentConditionRepository;
     @Inject
@@ -59,8 +59,8 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
     ImageView weatherIcon;
 
     private ForecastRecyclerAdapter forecastRecyclerAdapter;
-    HomeMvpPresenter homeMvpPresenter;
 
+    HomeMvpPresenter homeMvpPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,14 +88,13 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
         if (homeMvpPresenter == null) {
             homeMvpPresenter = new HomePresenter(this, service);
 //            try {
-//                homeMvpPresenter.initData(currentConditionRepository, futureForecastRepository);
+//                homeMvpPresenter.initializeData(currentConditionRepository, futureForecastRepository);
 //            } catch (NullPointerException e) {
 //                e.printStackTrace();
 //            }
         }
         homeMvpPresenter.attachView(this, service);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,8 +117,13 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
         }
     }
 
+    private void attachDialog() {
+        InputDialog inputDialog = new InputDialog();
+        inputDialog.show(getSupportFragmentManager(), "TAG");
+    }
+
     private void saveData() {
-        homeMvpPresenter.saveDataToDB(currentConditionRepository, futureForecastRepository);
+        homeMvpPresenter.saveData(currentConditionRepository, futureForecastRepository);
     }
 
     @Override
@@ -144,11 +148,6 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
     }
 
     @Override
-    public void attachDialog() {
-        homeMvpPresenter.attachDialog(getSupportFragmentManager());
-    }
-
-    @Override
     public void updateViews(ResponseObj responseObj) {
         try {
             currentLocation.setText(responseObj.getData().getRequest().get(0).getQuery());
@@ -164,7 +163,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
     }
 
     @Override
-    public void inputListener(String cityName, int daysForecast) {
+    public void onFinishDialog(String cityName, int daysForecast) {
         homeMvpPresenter.callApi(cityName, daysForecast);
     }
 }
