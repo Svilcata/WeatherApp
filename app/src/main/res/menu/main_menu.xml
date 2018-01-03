@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_build"
         android:title="Input days"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/saveData"
+        android:icon="@drawable/ic_action_save"
+        android:title="Save Data"
+        app:showAsAction="ifRoom" />
 </menu>

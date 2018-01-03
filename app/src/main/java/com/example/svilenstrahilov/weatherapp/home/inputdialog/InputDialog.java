@@ -22,7 +22,7 @@ public class InputDialog extends DialogFragment implements View.OnClickListener 
     Button button_Go;
 
     public interface UserInputListener {
-        void onInputSubmitted(String cityName, int daysForecast);
+        void inputListener(String cityName, int daysForecast);
     }
 
     public InputDialog() {
@@ -32,7 +32,7 @@ public class InputDialog extends DialogFragment implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         UserInputListener userInput = (UserInputListener) getActivity();
-        userInput.onInputSubmitted(editText_city.getText().toString(), Integer.valueOf(editText_days.getText().toString()));
+        userInput.inputListener(editText_city.getText().toString(), Integer.valueOf(editText_days.getText().toString()));
         this.dismiss();
     }
 

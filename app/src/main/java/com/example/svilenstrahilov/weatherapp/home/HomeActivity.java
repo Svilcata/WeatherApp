@@ -83,18 +83,15 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
         homeMvpPresenter = (HomeMvpPresenter) getLastCustomNonConfigurationInstance();
         if (homeMvpPresenter == null) {
             homeMvpPresenter = new HomePresenter(this, service);
+//            try {
+//                homeMvpPresenter.initData(currentConditionRepository, futureForecastRepository);
+//            } catch (NullPointerException e) {
+//                e.printStackTrace();
+//            }
         }
         homeMvpPresenter.attachView(this, service);
     }
 
-    private void attachDialog() {
-        homeMvpPresenter.attachDialog(getSupportFragmentManager());
-    }
-
-    @Override
-    public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,9 +106,16 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
             case R.id.input:
                 attachDialog();
                 return true;
+            case R.id.saveData:
+                saveData();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void saveData() {
+        homeMvpPresenter.saveDataToDB(currentConditionRepository, futureForecastRepository);
     }
 
     @Override
@@ -131,6 +135,16 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
     }
 
     @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void attachDialog() {
+        homeMvpPresenter.attachDialog(getSupportFragmentManager());
+    }
+
+    @Override
     public void updateViews(ResponseObj responseObj) {
         try {
             currentLocation.setText(responseObj.getData().getRequest().get(0).getQuery());
@@ -146,7 +160,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
     }
 
     @Override
-    public void onInputSubmitted(String cityName, int daysForecast) {
+    public void inputListener(String cityName, int daysForecast) {
         homeMvpPresenter.callApi(cityName, daysForecast);
     }
 }
