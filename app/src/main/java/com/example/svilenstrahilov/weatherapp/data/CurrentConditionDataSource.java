@@ -67,7 +67,7 @@ public class CurrentConditionDataSource implements CurrentConditionRepository {
     private static class addCCAsync extends AsyncTask<CurrentCondition, Void, Void> {
         private CurrentConditionDao currentConditionDao;
 
-        public addCCAsync(CurrentConditionDao currentConditionDao) {
+        addCCAsync(CurrentConditionDao currentConditionDao) {
             this.currentConditionDao = currentConditionDao;
         }
 

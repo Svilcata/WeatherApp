@@ -44,7 +44,7 @@ public class FutureDayForecastDataSource implements FutureForecastRepository {
     private static class addFCAsync extends AsyncTask<FutureDayForecast, Void, Void> {
         private FutureDayForecastDao futureDayForecastDao;
 
-        public addFCAsync(FutureDayForecastDao futureDayForecastDao) {
+        addFCAsync(FutureDayForecastDao futureDayForecastDao) {
             this.futureDayForecastDao = futureDayForecastDao;
         }
 
