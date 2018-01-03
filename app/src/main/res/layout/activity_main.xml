@@ -28,6 +28,8 @@
         android:id="@+id/weatherIcon"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:background="#000000"
+        android:padding="3dp"
         android:layout_centerHorizontal="true"
         app:srcCompat="@mipmap/ic_launcher" />
 

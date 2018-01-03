@@ -21,6 +21,8 @@ import com.example.svilenstrahilov.weatherapp.dagger.NetworkModule;
 import com.example.svilenstrahilov.weatherapp.dagger.RoomModule;
 import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecast;
 import com.example.svilenstrahilov.weatherapp.home.inputdialog.InputDialog;
+import com.example.svilenstrahilov.weatherapp.home.recylerview.ForecastRecyclerAdapter;
+import com.example.svilenstrahilov.weatherapp.home.recylerview.ForecastRecyclerPresenter;
 import com.example.svilenstrahilov.weatherapp.repository.CurrentConditionRepository;
 import com.example.svilenstrahilov.weatherapp.repository.FutureForecastRepository;
 import com.example.svilenstrahilov.weatherapp.retrofit.Service;
@@ -56,8 +58,9 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
     @BindView(R.id.weatherIcon)
     ImageView weatherIcon;
 
-    private HomeAdapter homeAdapter;
+    private ForecastRecyclerAdapter forecastRecyclerAdapter;
     HomeMvpPresenter homeMvpPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +71,14 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
         DaggerAppComponent.builder().appModule(new AppModule(getApplication())).networkModule(new NetworkModule()).roomModule(new RoomModule(getApplication())).build().inject(this);
 
         RecyclerView recyclerViewFutureForecast = findViewById(R.id.future_forecast);
+        ForecastRecyclerPresenter recyclerViewPresenter = new ForecastRecyclerPresenter(futureDayForecastList);
+        forecastRecyclerAdapter = new ForecastRecyclerAdapter(recyclerViewPresenter);
 
-        homeAdapter = new HomeAdapter(futureDayForecastList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewFutureForecast.setLayoutManager(mLayoutManager);
         recyclerViewFutureForecast.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFutureForecast.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerViewFutureForecast.setAdapter(homeAdapter);
+        recyclerViewFutureForecast.setAdapter(forecastRecyclerAdapter);
 
         attachMainPresenter();
     }
@@ -152,7 +156,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
             observation_time.setText(responseObj.getData().getCurrentCondition().get(0).getObservationTime());
             Picasso.with(this).load(responseObj.getData().getCurrentCondition().get(0).getWeatherIconUrl().get(0).getWeatherIconUrl()).into(weatherIcon);
             futureDayForecastList.addAll(responseObj.getData().getFutureDayForecasts());
-            homeAdapter.notifyDataSetChanged();
+            forecastRecyclerAdapter.notifyDataSetChanged();
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
