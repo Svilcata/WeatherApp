@@ -1,9 +1,7 @@
 package com.example.svilenstrahilov.weatherapp.home;
 
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
-import com.example.svilenstrahilov.weatherapp.home.inputdialog.InputDialog;
 import com.example.svilenstrahilov.weatherapp.repository.CurrentConditionRepository;
 import com.example.svilenstrahilov.weatherapp.repository.FutureForecastRepository;
 import com.example.svilenstrahilov.weatherapp.retrofit.Service;
@@ -40,8 +38,8 @@ public class HomePresenter implements HomeMvpPresenter {
     }
 
     @Override
-    public void attachView(HomeMvpView view, Service service) {
-        this.mHomeMvpView = view;
+    public void attachView(HomeMvpView homeMvpView, Service service) {
+        this.mHomeMvpView = homeMvpView;
         this.mService = service;
         updateViews(responseObject);
     }
@@ -58,19 +56,13 @@ public class HomePresenter implements HomeMvpPresenter {
     }
 
     @Override
-    public void attachDialog(FragmentManager supportFragmentManager) {
-        InputDialog inputDialog = new InputDialog();
-        inputDialog.show(supportFragmentManager, "InputDialog");
-    }
-
-    @Override
-    public void initData(CurrentConditionRepository currentConditionRepository, FutureForecastRepository futureForecastRepository) {
+    public void initializeData(CurrentConditionRepository currentConditionRepository, FutureForecastRepository futureForecastRepository) {
 //        responseObject = new ResponseObj();
 //        responseObject.setData(new Data(Collections.singletonList(currentConditionRepository.getItemById("0")), futureForecastRepository.getItems()));
     }
 
     @Override
-    public void saveDataToDB(CurrentConditionRepository currentConditionRepository, FutureForecastRepository futureForecastRepository) {
+    public void saveData(CurrentConditionRepository currentConditionRepository, FutureForecastRepository futureForecastRepository) {
         currentConditionRepository.addItem(responseObject.getData().getCurrentCondition().get(0));
         futureForecastRepository.addItems(responseObject.getData().getFutureDayForecasts());
     }

@@ -8,6 +8,4 @@ public interface HomeMvpView {
     void removeProgress();
 
     void updateViews(ResponseObj responseObj);
-
-    void attachDialog();
 }
