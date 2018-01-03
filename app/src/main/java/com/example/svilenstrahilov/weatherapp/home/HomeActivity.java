@@ -86,14 +86,14 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
     private void attachMainPresenter() {
         homeMvpPresenter = (HomeMvpPresenter) getLastCustomNonConfigurationInstance();
         if (homeMvpPresenter == null) {
-            homeMvpPresenter = new HomePresenter(this, service);
+            homeMvpPresenter = new HomePresenter(this);
 //            try {
 //                homeMvpPresenter.initializeData(currentConditionRepository, futureForecastRepository);
 //            } catch (NullPointerException e) {
 //                e.printStackTrace();
 //            }
         }
-        homeMvpPresenter.attachView(this, service);
+        homeMvpPresenter.attachView(this);
     }
 
     @Override
@@ -109,9 +109,6 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
             case R.id.input:
                 attachDialog();
                 return true;
-            case R.id.saveData:
-                saveData();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -120,10 +117,6 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
     private void attachDialog() {
         InputDialog inputDialog = new InputDialog();
         inputDialog.show(getSupportFragmentManager(), "TAG");
-    }
-
-    private void saveData() {
-        homeMvpPresenter.saveData(currentConditionRepository, futureForecastRepository);
     }
 
     @Override
@@ -164,6 +157,6 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
 
     @Override
     public void onFinishDialog(String cityName, int daysForecast) {
-        homeMvpPresenter.callApi(cityName, daysForecast);
+        homeMvpPresenter.callApi(service, cityName, daysForecast);
     }
 }

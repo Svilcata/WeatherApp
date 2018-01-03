@@ -9,18 +9,16 @@ import com.example.svilenstrahilov.weatherapp.retrofit.responseData.ResponseObj;
 
 public class HomePresenter implements HomeMvpPresenter {
     private HomeMvpView mHomeMvpView;
-    private Service mService;
     private ResponseObj responseObject;
 
-    HomePresenter(HomeMvpView homeMvpView, Service service) {
+    HomePresenter(HomeMvpView homeMvpView) {
         this.mHomeMvpView = homeMvpView;
-        this.mService = service;
     }
 
     @Override
-    public ResponseObj callApi(String city, int number_of_days) {
+    public ResponseObj callApi(Service service, String city, int number_of_days) {
         mHomeMvpView.showProgress();
-        mService.getResponseFromApi(city, number_of_days, new Service.GetCallback() {
+        service.getResponseFromApi(city, number_of_days, new Service.GetCallback() {
             @Override
             public ResponseObj onSuccess(ResponseObj responseObj) {
                 mHomeMvpView.removeProgress();
@@ -38,9 +36,8 @@ public class HomePresenter implements HomeMvpPresenter {
     }
 
     @Override
-    public void attachView(HomeMvpView homeMvpView, Service service) {
+    public void attachView(HomeMvpView homeMvpView) {
         this.mHomeMvpView = homeMvpView;
-        this.mService = service;
         updateViews(responseObject);
     }
 
