@@ -16,6 +16,8 @@ import java.util.List;
 public class HomePresenter implements HomeMvpPresenter {
     private HomeMvpView mHomeMvpView;
     private ResponseObj responseObject;
+    private Boolean isFutureForecastLoaded = false;
+    private Boolean isCurrentConditionLoaded = false;
 
     HomePresenter(HomeMvpView homeMvpView) {
         this.mHomeMvpView = homeMvpView;
@@ -69,17 +71,25 @@ public class HomePresenter implements HomeMvpPresenter {
             @Override
             public void processFinish(List<FutureDayForecast> futureDayForecastList) {
                 responseObject.getData().setFutureDayForecasts(futureDayForecastList);
+                isFutureForecastLoaded = true;
+                onFinished();
             }
         });
         currentConditionRepository.getItemById("0", new CurrentConditionRepository.AsyncResponseCC() {
             @Override
             public void processFinish(CurrentCondition currentCondition) {
                 responseObject.getData().setCurrentCondition(Collections.singletonList(currentCondition));
-                mHomeMvpView.removeProgress();
-                updateViews(responseObject);
+                isCurrentConditionLoaded = true;
+                onFinished();
             }
         });
-//        updateViews(responseObject);
+    }
+
+    private void onFinished() {
+        if (isCurrentConditionLoaded && isFutureForecastLoaded) {
+            mHomeMvpView.removeProgress();
+            updateViews(responseObject);
+        }
     }
 
     @Override

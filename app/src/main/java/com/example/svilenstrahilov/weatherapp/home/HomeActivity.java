@@ -87,11 +87,11 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
         homeMvpPresenter = (HomeMvpPresenter) getLastCustomNonConfigurationInstance();
         if (homeMvpPresenter == null) {
             homeMvpPresenter = new HomePresenter(this);
-//            try {
+            try {
                 homeMvpPresenter.initializeData(currentConditionRepository, futureForecastRepository);
-//            } catch (NullPointerException e) {
-//                e.printStackTrace();
-//            }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
         }
         homeMvpPresenter.attachView(this);
     }
