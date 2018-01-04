@@ -88,7 +88,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
         if (homeMvpPresenter == null) {
             homeMvpPresenter = new HomePresenter(this);
 //            try {
-//                homeMvpPresenter.initializeData(currentConditionRepository, futureForecastRepository);
+                homeMvpPresenter.initializeData(currentConditionRepository, futureForecastRepository);
 //            } catch (NullPointerException e) {
 //                e.printStackTrace();
 //            }
@@ -157,6 +157,6 @@ public class HomeActivity extends AppCompatActivity implements HomeMvpView, Inpu
 
     @Override
     public void onFinishDialog(String cityName, int daysForecast) {
-        homeMvpPresenter.callApi(service, cityName, daysForecast);
+        homeMvpPresenter.callApi(service, cityName, daysForecast, currentConditionRepository, futureForecastRepository);
     }
 }

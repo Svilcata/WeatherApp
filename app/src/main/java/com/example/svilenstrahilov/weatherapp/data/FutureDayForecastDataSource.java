@@ -22,7 +22,7 @@ public class FutureDayForecastDataSource implements FutureForecastRepository {
     public void addItems(List<FutureDayForecast> items) {
         for (FutureDayForecast fdf :
                 items) {
-            new addFCAsync(futureDayForecastDao).execute(fdf);
+            new AddFutureForecastAsync(futureDayForecastDao).execute(fdf);
         }
     }
 
@@ -37,14 +37,14 @@ public class FutureDayForecastDataSource implements FutureForecastRepository {
     }
 
     @Override
-    public List<FutureDayForecast> getItems() {
-        return null;
+    public AsyncTask<Void, Void, List<FutureDayForecast>> getItems(AsyncResponseFF asyncResponseFF) {
+        return new GetFutureForecastsAsync(futureDayForecastDao, asyncResponseFF).execute();
     }
 
-    private static class addFCAsync extends AsyncTask<FutureDayForecast, Void, Void> {
+    private static class AddFutureForecastAsync extends AsyncTask<FutureDayForecast, Void, Void> {
         private FutureDayForecastDao futureDayForecastDao;
 
-        addFCAsync(FutureDayForecastDao futureDayForecastDao) {
+        AddFutureForecastAsync(FutureDayForecastDao futureDayForecastDao) {
             this.futureDayForecastDao = futureDayForecastDao;
         }
 
@@ -52,6 +52,26 @@ public class FutureDayForecastDataSource implements FutureForecastRepository {
         protected Void doInBackground(FutureDayForecast... futureDayForecasts) {
             futureDayForecastDao.addFutureForecast(futureDayForecasts[0]);
             return null;
+        }
+    }
+
+    private static class GetFutureForecastsAsync extends AsyncTask<Void, Void, List<FutureDayForecast>> {
+        AsyncResponseFF delegate = null;
+        private FutureDayForecastDao futureDayForecastDao;
+
+        GetFutureForecastsAsync(FutureDayForecastDao futureDayForecastDao, AsyncResponseFF delegate) {
+            this.futureDayForecastDao = futureDayForecastDao;
+            this.delegate = delegate;
+        }
+
+        @Override
+        protected List<FutureDayForecast> doInBackground(Void... voids) {
+            return futureDayForecastDao.getFutureForecast();
+        }
+
+        @Override
+        protected void onPostExecute(List<FutureDayForecast> futureDayForecastList) {
+            delegate.processFinish(futureDayForecastList);
         }
     }
 }

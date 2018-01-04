@@ -1,5 +1,7 @@
 package com.example.svilenstrahilov.weatherapp.repository;
 
+import android.os.AsyncTask;
+
 import com.example.svilenstrahilov.weatherapp.data.models.CurrentCondition;
 
 public interface CurrentConditionRepository {
@@ -15,5 +17,9 @@ public interface CurrentConditionRepository {
 
 //    List<CurrentCondition> getItems();
 
-    CurrentCondition getItemById(String id);
+    AsyncTask<String, Void, CurrentCondition> getItemById(String id, AsyncResponseCC asyncResponseCC);
+
+    interface AsyncResponseCC {
+        void processFinish(CurrentCondition currentCondition);
+    }
 }

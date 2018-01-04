@@ -1,5 +1,7 @@
 package com.example.svilenstrahilov.weatherapp.repository;
 
+import android.os.AsyncTask;
+
 import com.example.svilenstrahilov.weatherapp.data.models.FutureDayForecast;
 
 import java.util.List;
@@ -12,6 +14,10 @@ public interface FutureForecastRepository {
 
     void removeItemById(String id);
 
-    List<FutureDayForecast> getItems();
+    AsyncTask<Void, Void, List<FutureDayForecast>> getItems(AsyncResponseFF asyncResponseFF);
+
+    interface AsyncResponseFF {
+        void processFinish(List<FutureDayForecast> futureDayForecastList);
+    }
 
 }

@@ -18,7 +18,7 @@ public class CurrentConditionDataSource implements CurrentConditionRepository {
 
     @Override
     public void addItem(CurrentCondition item) {
-        new addCCAsync(currentConditionDao).execute(item);
+        new AddCurrentConditionAsync(currentConditionDao).execute(item);
     }
 
     @Override
@@ -32,42 +32,34 @@ public class CurrentConditionDataSource implements CurrentConditionRepository {
     }
 
     @Override
-    public CurrentCondition getItemById(String id) {
-        return null;
+    public AsyncTask<String, Void, CurrentCondition> getItemById(String id, AsyncResponseCC asyncResponseCC) {
+        return new GetCurrentConditionAsync(currentConditionDao, asyncResponseCC).execute(id);
     }
 
-    //    private static class getCCAsync extends AsyncTask<String, Void, CurrentCondition> {
-//        private AppDatabase appDatabase;
-//
-//        getCCAsync(AppDatabase appDatabase) {
-//            this.appDatabase = appDatabase;
-//        }
-//
-//        @Override
-//        protected CurrentCondition doInBackground(String... strings) {
-//            return appDatabase.getCurrentConditionDao().getCCById(strings[0]);
-//        }
-//    }
-//
-//    private static class removeCCAsync extends AsyncTask<String, Void, Void> {
-//        private AppDatabase appDatabase;
-//
-//        removeCCAsync(AppDatabase appDatabase) {
-//            this.appDatabase = appDatabase;
-//        }
-//
-//
-//        @Override
-//        protected Void doInBackground(String... strings) {
-//            appDatabase.getCurrentConditionDao().deleteCondition(appDatabase.getCurrentConditionDao().getCCById(strings[0]));
-//            return null;
-//        }
-//    }
-//
-    private static class addCCAsync extends AsyncTask<CurrentCondition, Void, Void> {
+    private static class GetCurrentConditionAsync extends AsyncTask<String, Void, CurrentCondition> {
+        AsyncResponseCC delegate = null;
         private CurrentConditionDao currentConditionDao;
 
-        addCCAsync(CurrentConditionDao currentConditionDao) {
+        public GetCurrentConditionAsync(CurrentConditionDao currentConditionDao, AsyncResponseCC delegate) {
+            this.currentConditionDao = currentConditionDao;
+            this.delegate = delegate;
+        }
+
+        @Override
+        protected CurrentCondition doInBackground(String... strings) {
+            return currentConditionDao.getCCById(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(CurrentCondition currentCondition) {
+            delegate.processFinish(currentCondition);
+        }
+    }
+
+    private static class AddCurrentConditionAsync extends AsyncTask<CurrentCondition, Void, Void> {
+        private CurrentConditionDao currentConditionDao;
+
+        AddCurrentConditionAsync(CurrentConditionDao currentConditionDao) {
             this.currentConditionDao = currentConditionDao;
         }
 
