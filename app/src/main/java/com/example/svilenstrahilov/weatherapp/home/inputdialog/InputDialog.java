@@ -69,7 +69,7 @@ public class InputDialog extends DialogFragment implements View.OnClickListener,
     }
 
     @Override
-    public void inputListener(String cityName, int daysForecast) {
+    public void submitButtonClicked(String cityName, int daysForecast) {
         dialogListener.onFinishDialog(cityName, daysForecast);
     }
 }

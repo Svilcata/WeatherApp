@@ -19,6 +19,6 @@ public class InputDialogPresenter implements InputDialogMvpPresenter {
 
     @Override
     public void getBackUserInput(String cityName, int daysForecast) {
-        inputDialogMvpView.inputListener(cityName, daysForecast);
+        inputDialogMvpView.submitButtonClicked(cityName, daysForecast);
     }
 }
